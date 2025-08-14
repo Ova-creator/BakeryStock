@@ -27,9 +27,9 @@ while True:
 
     elif choice == '2':
         if not ingredients:
-            print("📭 No ingredients added yet.")
+            print("No ingredients added yet.")
         else:
-            print("\n📋 Ingredient Stock:")
+            print("\n Ingredient Stock:")
             for item, qty in ingredients.items():
                 print(f"- {item}: {qty}")
 
@@ -40,12 +40,12 @@ while True:
             continue
         quantity = input(f"Enter new quantity and unit for {name}: ").strip()
         ingredients[name] = quantity
-        print(f"🔄 {name} updated to: {quantity}")
+        print(f" {name} updated to: {quantity}")
 
     elif choice == '4':
         name = input("Enter the ingredient name to search: ").capitalize()
         if name in ingredients:
-            print(f"🔎 {name}: {ingredients[name]}")
+            print(f" {name}: {ingredients[name]}")
         else:
             print("❌ Ingredient not found.")
 
@@ -55,4 +55,5 @@ while True:
 
     else:
         print("Invalid choice. Please enter a number from 1 to 5.")
+
 
