@@ -1,57 +1,58 @@
-# Bakery Stock Management Program
+#  Bakery Ingredient Manager
 
-# Initial stock quantities
-stock = {
-    "Bread": 50,
-    "Croissant": 30,
-    "Cake": 20,
-    "Muffin": 25,
-    "Eclair": 15
-}
+ingredients = {}
 
-# Start program
-print("🍞 Welcome to the Bakery Stock Manager! 🍰")
+print(" Welcome to the Bakery Ingredient Manager! ")
+
+def show_menu():
+    print("\nWhat would you like to do?")
+    print("1. Add new ingredient")
+    print("2. View all ingredients")
+    print("3. Update ingredient quantity")
+    print("4. Search for an ingredient")
+    print("5. Exit")
 
 while True:
-    print("\n--- Current Stock ---")
-    for item, quantity in stock.items():
-        print(f"{item}: {quantity} units")
+    show_menu()
+    choice = input("Enter your choice (1–5): ").strip()
 
-    action = input("\nType 'in' to add stock, 'out' to remove stock, or 'done' to finish: ").lower()
+    if choice == '1':
+        name = input("Enter the name of the new ingredient: ").capitalize()
+        if name in ingredients:
+            print("⚠️ Ingredient already exists.")
+            continue
+        quantity = input(f"Enter quantity and unit (e.g., '10 kilos', '5 litres'): ").strip()
+        ingredients[name] = quantity
+        print(f"✅ {name} added with quantity: {quantity}")
 
-    if action == 'done':
-        print("\n📦 Final Stock Report:")
-        for item, quantity in stock.items():
-            print(f"{item}: {quantity} units")
-        print("✅ Stock update completed. Thank you!")
+    elif choice == '2':
+        if not ingredients:
+            print("📭 No ingredients added yet.")
+        else:
+            print("\n📋 Ingredient Stock:")
+            for item, qty in ingredients.items():
+                print(f"- {item}: {qty}")
+
+    elif choice == '3':
+        name = input("Enter the name of the ingredient to update: ").capitalize()
+        if name not in ingredients:
+            print("❌ Ingredient not found.")
+            continue
+        quantity = input(f"Enter new quantity and unit for {name}: ").strip()
+        ingredients[name] = quantity
+        print(f"🔄 {name} updated to: {quantity}")
+
+    elif choice == '4':
+        name = input("Enter the ingredient name to search: ").capitalize()
+        if name in ingredients:
+            print(f"🔎 {name}: {ingredients[name]}")
+        else:
+            print("❌ Ingredient not found.")
+
+    elif choice == '5':
+        print("Exiting program. Goodbye!")
         break
 
-    if action not in ['in', 'out']:
-        print("⚠️ Invalid action. Please enter 'in', 'out', or 'done'.")
-        continue
-
-    product = input("Enter product name: ").capitalize()
-
-    if product not in stock:
-        print("❌ This product is not in the stock list.")
-        continue
-
-    try:
-        amount = int(input(f"How many units to {'add' if action == 'in' else 'remove'}? "))
-        if amount < 0:
-            print("⚠️ Quantity must be a positive number.")
-            continue
-    except ValueError:
-        print("⚠️ Please enter a valid number.")
-        continue
-
-    if action == 'in':
-        stock[product] += amount
-        print(f"✅ {amount} {product}(s) added. New stock: {stock[product]}")
-    elif action == 'out':
-        if amount > stock[product]:
-            print(f"⚠️ Not enough {product} in stock to remove {amount}.")
-        else:
-            stock[product] -= amount
-            print(f"✅ {amount} {product}(s) removed. New stock: {stock[product]}")
+    else:
+        print("Invalid choice. Please enter a number from 1 to 5.")
 
